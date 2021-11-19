@@ -1,5 +1,20 @@
 class BirdsController < ApplicationController
 
+  def increment_likes
+    bird = Bird.find_by(id: params[:id])
+    bird.update(likes: bird.likes + 1)
+    render json: bird
+  end 
+
+
+  #PATCH
+  def update
+    bird = Bird.find_by(id: params[:id])
+    bird.update(bird_params)
+    render json: bird
+  end 
+
+
   # GET /birds
   def index
     birds = Bird.all
@@ -25,7 +40,7 @@ class BirdsController < ApplicationController
   private
 
   def bird_params
-    params.permit(:name, :species)
+    params.permit(:name, :species, :likes)
   end
 
 end
